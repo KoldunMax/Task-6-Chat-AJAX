@@ -1,1 +1,1 @@
-# Task-6-Chat-Socket.io
+# Task-6-Chat-AJAX
