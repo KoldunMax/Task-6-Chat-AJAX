@@ -35,7 +35,23 @@ app.post("/messages", function(req, res) {
 })
 
 app.post("/users", function(req, res) {
-    users.push(req.body);
+
+    var concidence = false;
+    for(let i = 0; i < users.length; i++) {
+        if(users[i].nickname == req.body.nickname) {
+            if(users[i].name == req.body.name) {
+                concidence = true;
+                res.status(200);
+                res.end();
+            }
+        }
+    }
+    if(!concidence) {
+        users.push(req.body);
+        res.status(200);
+        res.end();
+    }
+
     res.end();
 })
 
@@ -44,7 +60,7 @@ function chackValidMessage(msg) {
       messages.push(msg);
     }
     if (messages.length > 100) {
-      messages.shift();
+      messages.length = 0;
     }
   }
 

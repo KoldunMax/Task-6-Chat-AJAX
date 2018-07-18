@@ -47,7 +47,7 @@
 /* Main part of chat */
 
 #main-wrapper-chat {
-    display: grid;
+    display: none;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: auto;
     max-width: 1200px;
@@ -117,6 +117,7 @@ h3#header-chat-title {
     border: 2px solid black;
     border-left: none;
     min-height: 500px;
+    max-height: 800px;
 }
 
 #main-wrapper-messages .message-content {
@@ -129,6 +130,7 @@ h3#header-chat-title {
     padding: 0px 20px;
     max-width: 60%;
     border-radius: 30px;
+    max-height: 150px;
 }
 
 #main-wrapper-messages .other-user {

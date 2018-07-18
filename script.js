@@ -33,7 +33,8 @@ inviteButton.addEventListener("click", function() {
 
         headerChatTitle.innerHTML = `You successfully joined in chat  <span id="headerName">${newUser.nickname}</span`;
         headerNameUser = document.getElementById("headerName");
-
+        inviteForm.style.display = "none";
+        mainWrapperChat.style.display = "grid";       
         setTimeout(function() {
             getUsers();
             getMessages();
@@ -55,7 +56,7 @@ buttonMessageFooter.addEventListener("click", function() {
         text: textMessageFooter.value,
         time: new Date()
     }
-
+    textMessageFooter.value = "";
     ajaxRequest({
         method: 'POST',
         url: '/messages',
@@ -77,7 +78,7 @@ var ajaxRequest = function(options) {
     xmlHttp.onreadystatechange = () => {
       if (xmlHttp.status == 200 && xmlHttp.readyState === 4) {
         callback(xmlHttp.responseText);
-      }
+      } 
     };
   };
 
@@ -93,7 +94,11 @@ var getUsers = function() {
           for (var i in users) {
             if (users.hasOwnProperty(i)) {
               var el = document.createElement("li");
-              el.innerHTML = `<i class="fa fa-user-circle-o"></i> ${users[i].nickname}`	         
+              if(users[i].nickname == newUser.nickname) {
+                el.innerHTML = `<i class="fa fa-user-circle-o" style='color: blue;'></i> ${users[i].nickname}`	   
+              } else {
+                el.innerHTML = `<i class="fa fa-user-circle-o"></i> ${users[i].nickname}`	         
+              }
               ULasideUsers.appendChild(el); 
             }
           }
@@ -130,8 +135,8 @@ var displayMessages = function(msg) {
 
     var textPlace = document.createElement("p");
     var str =  msg.text;
-
-    if(str.search(`@${headerNameUser.innerText}`) != -1) {
+                    
+    if(str.indexOf(`@${newUser.nickname} `) != -1) {
         textPlace.className = "message-user-text message-user-text-regex";
     } else {
         textPlace.className = "message-user-text";
