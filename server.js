@@ -3,6 +3,7 @@ var app = require("express")(),
     bodyParser = require('body-parser');
 
 var messages = [];
+var users = [];
 
 app.use(bodyParser.json());
 
@@ -24,10 +25,28 @@ app.get("/messages", function(req, res) {
     res.json(messages);
 })
 
+app.get("/users", function(req, res) {
+    res.json(users);
+})
+
 app.post("/messages", function(req, res) {
-    messages.push(req.body);
+    chackValidMessage(req.body);
     res.end();
 })
+
+app.post("/users", function(req, res) {
+    users.push(req.body);
+    res.end();
+})
+
+function chackValidMessage(msg) {
+    if (msg.text !== '') {
+      messages.push(msg);
+    }
+    if (messages.length > 100) {
+      messages.shift();
+    }
+  }
 
 http.listen(1428, function() {
     console.log("litening on *:1428");
